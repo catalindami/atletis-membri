@@ -16,7 +16,7 @@ $appName = (string) config('app.name', 'Membri');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title><?= e(($title ?? '') !== '' ? $title . ' · ' . $appName : $appName) ?></title>
-    <link rel="stylesheet" href="assets/app.css?v=2">
+    <link rel="stylesheet" href="assets/app.css?v=3">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c2410c'/%3E%3Cpath d='M9 23l7-14 7 14' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 </head>
 <body class="<?= $currentUser ? 'is-app' : 'is-guest' ?>">
@@ -30,6 +30,7 @@ $appName = (string) config('app.name', 'Membri');
         <nav class="nav" aria-label="Meniu principal">
             <a href="<?= e(url('dashboard')) ?>" class="<?= $route === 'dashboard' ? 'is-active' : '' ?>">Panou</a>
             <a href="<?= e(url('members')) ?>" class="<?= in_array($route, ['members', 'member'], true) ? 'is-active' : '' ?>">Membri</a>
+            <a href="<?= e(url('import')) ?>" class="<?= str_starts_with($route, 'import') ? 'is-active' : '' ?>">Import</a>
             <a href="<?= e(url('member')) ?>" class="nav__cta">+ Membru nou</a>
         </nav>
         <div class="account">

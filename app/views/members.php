@@ -5,6 +5,7 @@ use App\Members;
 <div class="page-head">
     <h1>Membri <span class="count"><?= count($members) ?></span></h1>
     <div class="actions">
+        <a href="<?= e(url('import')) ?>" class="btn">Import CSV</a>
         <a href="<?= e(url('export')) ?>" class="btn">Export CSV</a>
         <a href="<?= e(url('member')) ?>" class="btn btn--primary">+ Membru nou</a>
     </div>

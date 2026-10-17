@@ -203,6 +203,78 @@ try {
             fclose($out);
             exit;
 
+        // ---------- Import CSV ----------
+        case 'import':
+            Auth::requireAdmin();
+            $error = null;
+            if (is_post()) {
+                Csrf::check();
+                $file = $_FILES['file'] ?? null;
+                $ext = strtolower(pathinfo((string) ($file['name'] ?? ''), PATHINFO_EXTENSION));
+                if (!$file || ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+                    $error = ($file['error'] ?? null) === UPLOAD_ERR_INI_SIZE || ($file['error'] ?? null) === UPLOAD_ERR_FORM_SIZE
+                        ? 'Fișierul este prea mare.' : 'Alege un fișier CSV.';
+                } elseif (in_array($ext, ['xlsx', 'xls', 'ods'], true)) {
+                    $error = 'Acesta e un fișier Excel. Salvează-l ca CSV (în Google Sheets: Fișier → Descarcă → .csv) și încearcă din nou.';
+                } elseif ($file['size'] > App\Import::MAX_BYTES) {
+                    $error = 'Fișierul este prea mare (maxim 2 MB).';
+                } else {
+                    try {
+                        $parsed = App\Import::parse($file['tmp_name']);
+                        $_SESSION['import'] = [
+                            'filename' => mb_substr((string) $file['name'], 0, 120),
+                            'headers'  => $parsed['headers'],
+                            'map'      => $parsed['map'],
+                            'plan'     => App\Import::plan($parsed),
+                        ];
+                        redirect('import_preview');
+                    } catch (\RuntimeException $ex) {
+                        $error = $ex->getMessage();
+                    }
+                }
+            }
+            unset($_SESSION['import']);
+            render('import', ['title' => 'Import membri', 'plan' => null, 'error' => $error]);
+            break;
+
+        case 'import_preview':
+            Auth::requireAdmin();
+            if (empty($_SESSION['import'])) {
+                redirect('import');
+            }
+            $imp = $_SESSION['import'];
+            render('import', [
+                'title' => 'Import membri', 'plan' => $imp['plan'], 'error' => null,
+                'headers' => $imp['headers'], 'mappedColumns' => $imp['map'], 'filename' => $imp['filename'],
+            ]);
+            break;
+
+        case 'import_confirm':
+            Auth::requireAdmin();
+            if (!is_post() || empty($_SESSION['import'])) {
+                redirect('import');
+            }
+            Csrf::check();
+            [$created, $updated] = App\Import::apply($_SESSION['import']['plan']);
+            unset($_SESSION['import']);
+            flash('success', "Import finalizat: $created membri noi, $updated actualizați.");
+            redirect('members');
+
+        case 'import_cancel':
+            Auth::requireAdmin();
+            if (is_post()) {
+                Csrf::check();
+                unset($_SESSION['import']);
+            }
+            redirect('import');
+
+        case 'import_template':
+            Auth::requireAdmin();
+            header('Content-Type: text/csv; charset=UTF-8');
+            header('Content-Disposition: attachment; filename="sablon-membri.csv"');
+            echo App\Import::templateCsv();
+            exit;
+
         case 'password':
             Auth::requireAdmin();
             $errors = [];
