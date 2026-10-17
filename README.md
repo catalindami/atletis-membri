@@ -99,7 +99,7 @@ cPanel are nevoie de o cheie SSH ca să citească un repository privat:
 - Fiecare email trimis sau eșuat este înregistrat în tabela `notification_log`; ultimele apar pe pagina fiecărui membru.
 
 ## Securitate și GDPR
-- Doar `public/` este accesibil din web; restul folderelor au și `.htaccess` cu `Require all denied`.
+- Doar `public/` este accesibil din web (subdomeniul arată direct spre el); folderele `app`, `config`, `cron` etc. au în plus `.htaccess` cu `Require all denied`.
 - Parole stocate cu `password_hash` (bcrypt), protecție CSRF pe toate formularele, blocare după 5 încercări greșite în 15 minute, deconectare după 2 ore de inactivitate, HTTPS forțat.
 - Paginile au `noindex`, deci nu apar în Google.
 - Exportul CSV conține date personale: păstrează-l în siguranță și șterge-l când nu mai ai nevoie de el.
