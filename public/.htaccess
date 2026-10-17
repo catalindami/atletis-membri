@@ -1,3 +1,6 @@
+# Folderul părinte are „Require all denied”; aici permitem explicit accesul public.
+Require all granted
+
 Options -Indexes
 DirectoryIndex index.php
 
