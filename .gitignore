@@ -1,0 +1,5 @@
+/config/config.php
+/storage/logs/*
+!/storage/logs/.gitkeep
+!/storage/logs/.htaccess
+.DS_Store

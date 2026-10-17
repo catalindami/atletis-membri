@@ -1,0 +1,3 @@
+# Plasă de siguranță: dacă subdomeniul ar arăta greșit spre rădăcina proiectului,
+# nimic din afara folderului public/ nu este servit.
+Require all denied
