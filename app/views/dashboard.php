@@ -66,22 +66,6 @@ $tiles = [
     </section>
 </div>
 
-<?php if ($medical): ?>
-    <section class="card">
-        <h2>Vize medicale expirate sau care expiră în 30 de zile</h2>
-        <ul class="list">
-            <?php foreach ($medical as $m): ?>
-                <li>
-                    <a href="<?= e(url('member', ['id' => $m['id']])) ?>"><?= e($m['last_name'] . ' ' . $m['first_name']) ?></a>
-                    <span class="badge badge--<?= e(expiry_status($m['medical_expires_on'], 30)) ?>">
-                        <?= e(fmt_date($m['medical_expires_on'])) ?> · <?= e(expiry_label($m['medical_expires_on'], 30)) ?>
-                    </span>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </section>
-<?php endif; ?>
-
 <p class="footnote muted">
     <?php if ($lastMail): ?>
         Ultimul email automat: <?= e(date('d.m.Y H:i', strtotime($lastMail['sent_at']))) ?>

@@ -8,11 +8,11 @@ final class Members
 {
     public const FIELDS = [
         'first_name', 'last_name', 'birth_date', 'gender', 'email', 'phone', 'address',
-        'category', 'coach', 'joined_on', 'strava_url', 'medical_expires_on',
+        'category', 'coach', 'joined_on', 'strava_url',
         'subscription_expires_on', 'notes', 'is_active',
     ];
 
-    private const DATE_FIELDS = ['birth_date', 'joined_on', 'medical_expires_on', 'subscription_expires_on'];
+    private const DATE_FIELDS = ['birth_date', 'joined_on', 'subscription_expires_on'];
 
     public const STATUS_FILTERS = [
         ''         => 'Toți membrii activi',
@@ -92,8 +92,7 @@ final class Members
                 SUM(is_active = 1 AND subscription_expires_on >= CURDATE()) AS paid,
                 SUM(is_active = 1 AND subscription_expires_on BETWEEN CURDATE() AND (CURDATE() + INTERVAL ? DAY)) AS expiring,
                 SUM(is_active = 1 AND subscription_expires_on < CURDATE()) AS expired,
-                SUM(is_active = 1 AND subscription_expires_on IS NULL) AS no_date,
-                SUM(is_active = 1 AND medical_expires_on < CURDATE()) AS medical_expired
+                SUM(is_active = 1 AND subscription_expires_on IS NULL) AS no_date
              FROM members',
             [$soonDays]
         )->fetch() ?: [];
@@ -120,16 +119,6 @@ final class Members
         )->fetchAll();
     }
 
-    public static function medicalExpiringWithin(int $days): array
-    {
-        return Db::run(
-            'SELECT * FROM members
-             WHERE is_active = 1 AND medical_expires_on IS NOT NULL
-               AND medical_expires_on <= (CURDATE() + INTERVAL ? DAY)
-             ORDER BY medical_expires_on, last_name, first_name',
-            [$days]
-        )->fetchAll();
-    }
 
     /**
      * Curăță și validează datele din formular.

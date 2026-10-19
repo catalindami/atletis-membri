@@ -17,14 +17,14 @@ final class Import
     /** Antetele șablonului, în ordinea din export. */
     public const TEMPLATE_HEADERS = [
         'Nume', 'Prenume', 'Data nașterii', 'Sex', 'Email', 'Telefon', 'Adresă', 'Categorie',
-        'Antrenor', 'Data înscrierii', 'Strava', 'Viză medicală până la', 'Contribuție până la', 'Activ', 'Observații',
+        'Antrenor', 'Data înscrierii', 'Strava', 'Contribuție până la', 'Activ', 'Observații',
     ];
 
     public const FIELD_LABELS = [
         'last_name' => 'Nume', 'first_name' => 'Prenume', 'full_name' => 'Nume complet',
         'birth_date' => 'Data nașterii', 'gender' => 'Sex', 'email' => 'Email', 'phone' => 'Telefon',
         'address' => 'Adresă', 'category' => 'Categorie', 'coach' => 'Antrenor',
-        'joined_on' => 'Data înscrierii', 'strava_url' => 'Strava', 'medical_expires_on' => 'Viză medicală',
+        'joined_on' => 'Data înscrierii', 'strava_url' => 'Strava',
         'subscription_expires_on' => 'Contribuție până la', 'is_active' => 'Activ', 'notes' => 'Observații',
     ];
 
@@ -46,7 +46,6 @@ final class Import
         'coach'      => ['antrenor', 'coach'],
         'joined_on'  => ['datainscrierii', 'datainscriere', 'inscris*', 'membrudin', 'joined*', 'timestamp', 'marcajtemporal'],
         'strava_url' => ['strava*', 'profilstrava'],
-        'medical_expires_on' => ['vizamedicala*', 'viza*', 'avizmedical*'],
         'subscription_expires_on' => ['contributie*', 'cotizatie*', 'abonament*', 'valabilpanala', 'activpanala', 'expira*', 'subscription*'],
         'is_active'  => ['activ', 'active', 'status'],
         'notes'      => ['observatii', 'alteobservatii', 'note', 'notes', 'mentiuni'],
@@ -199,7 +198,7 @@ final class Import
             }
         }
 
-        foreach (['birth_date', 'joined_on', 'medical_expires_on', 'subscription_expires_on'] as $f) {
+        foreach (['birth_date', 'joined_on', 'subscription_expires_on'] as $f) {
             if (isset($out[$f])) {
                 $out[$f] = self::normalizeDate($out[$f]) ?? $out[$f];
             }

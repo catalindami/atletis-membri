@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS members (
     coach                    VARCHAR(100) NULL,
     joined_on                DATE NULL,
     strava_url               VARCHAR(255) NULL,
-    medical_expires_on       DATE NULL,
     subscription_expires_on  DATE NULL,
     notes                    TEXT NULL,
     is_active                TINYINT(1) NOT NULL DEFAULT 1,

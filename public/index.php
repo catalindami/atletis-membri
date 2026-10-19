@@ -91,7 +91,6 @@ try {
                 'stats'    => Members::stats($soon),
                 'expiring' => Members::expiringBetween(0, $soon),
                 'expired'  => array_slice(Members::expired(), 0, 10),
-                'medical'  => Members::medicalExpiringWithin(30),
                 'soon'     => $soon,
                 'lastMail' => Db::run('SELECT * FROM notification_log ORDER BY id DESC LIMIT 1')->fetch() ?: null,
             ]);
@@ -190,12 +189,12 @@ try {
             $out = fopen('php://output', 'w');
             fwrite($out, "\xEF\xBB\xBF"); // BOM, ca Excel să afișeze corect diacriticele
             $headers = ['Nume', 'Prenume', 'Data nașterii', 'Sex', 'Email', 'Telefon', 'Adresă', 'Categorie',
-                'Antrenor', 'Data înscrierii', 'Strava', 'Viză medicală până la', 'Contribuție până la', 'Activ', 'Observații'];
+                'Antrenor', 'Data înscrierii', 'Strava', 'Contribuție până la', 'Activ', 'Observații'];
             fputcsv($out, $headers, ';', '"', '');
             foreach ($rows as $r) {
                 $line = [$r['last_name'], $r['first_name'], $r['birth_date'], $r['gender'], $r['email'], $r['phone'],
                     $r['address'], $r['category'], $r['coach'], $r['joined_on'], $r['strava_url'],
-                    $r['medical_expires_on'], $r['subscription_expires_on'], $r['is_active'] ? 'da' : 'nu', $r['notes']];
+                    $r['subscription_expires_on'], $r['is_active'] ? 'da' : 'nu', $r['notes']];
                 // Protecție împotriva formulelor injectate în Excel
                 $line = array_map(static fn ($v) => preg_match('/^[=+\-@\t\r]/', (string) $v) ? "'" . $v : (string) $v, $line);
                 fputcsv($out, $line, ';', '"', '');

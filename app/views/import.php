@@ -37,7 +37,7 @@ $labels = [
             <ol class="steps">
                 <li>În Google Sheets: <strong>Fișier → Descarcă → Valori separate prin virgulă (.csv)</strong>. Se exportă doar tab-ul deschis.</li>
                 <li>Primul rând trebuie să conțină numele coloanelor. Obligatorii sunt <strong>Nume</strong> și <strong>Prenume</strong> (sau o singură coloană <strong>Nume Prenume</strong>).</li>
-                <li>Celelalte coloane sunt opționale și pot fi în orice ordine. Le recunosc după nume: Data nașterii, Email, Telefon, Sex, Adresă, Categorie, Antrenor, Data înscrierii, Strava, Viză medicală, Contribuție până la, Activ, Observații. Recunosc și coloanele din formularul Google de înscriere (ex. „Nr. telefon”, „Data nașterii [opțional]”).</li>
+                <li>Celelalte coloane sunt opționale și pot fi în orice ordine. Le recunosc după nume: Data nașterii, Email, Telefon, Sex, Adresă, Categorie, Antrenor, Data înscrierii, Strava, Contribuție până la, Activ, Observații. Recunosc și coloanele din formularul Google de înscriere (ex. „Nr. telefon”, „Data nașterii [opțional]”).</li>
                 <li>Datele pot fi scrise <code>17.10.2026</code>, <code>17/10/2026</code>, <code>2026-10-17</code> sau <code>31-Jan-2026</code>.</li>
                 <li>Membrii existenți sunt recunoscuți după email, apoi după nume. Pentru ei, se completează doar câmpurile care au valoare în fișier; celulele goale nu șterg nimic, iar data înscrierii, dacă există deja, nu se modifică.</li>
             </ol>

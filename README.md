@@ -1,6 +1,6 @@
 # ACS Atletis – Gestiune membri
 
-Aplicație PHP + MySQL pentru evidența membrilor clubului: date personale, contribuția anuală, viza medicală, profil Strava, plus emailuri automate la expirarea contribuției și un rezumat săptămânal pentru administrator.
+Aplicație PHP + MySQL pentru evidența membrilor clubului: date personale, contribuția anuală, profil Strava, plus emailuri automate la expirarea contribuției și un rezumat săptămânal pentru administrator.
 
 - PHP 8.1+ (testat pe 8.3; serverul rulează 8.4), MySQL 5.7+ / MariaDB 10.3+
 - Fără Composer pe server: biblioteca de email (PHPMailer 6.10) este inclusă în `lib/`
@@ -95,7 +95,7 @@ cPanel are nevoie de o cheie SSH ca să citească un repository privat:
 - Zilnic, fiecare membru **activ, cu email**, a cărui contribuție expiră în următoarele **7 zile** primește un singur email pentru acea dată de expirare. Dacă cron-ul nu rulează într-o zi, emailul pleacă în ziua următoare.
 - Când prelungești contribuția, următorul email va fi trimis pentru noua dată.
 - Membrii fără email apar în rezumat, ca să-i contactezi telefonic.
-- **Luni** (configurabil), adminul primește rezumatul: expirări în următoarele 14 zile, contribuții expirate și vize medicale care expiră în 30 de zile.
+- **Luni** (configurabil), adminul primește rezumatul: expirări în următoarele 14 zile și contribuții expirate.
 - Fiecare email trimis sau eșuat este înregistrat în tabela `notification_log`; ultimele apar pe pagina fiecărui membru.
 
 ## Securitate și GDPR

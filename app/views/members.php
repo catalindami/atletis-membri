@@ -58,7 +58,6 @@ use App\Members;
                 <th class="hide-sm">Categorie</th>
                 <th class="hide-md">Contact</th>
                 <th>Contribuție</th>
-                <th class="hide-md">Viză medicală</th>
                 <th class="col-actions"><span class="sr-only">Acțiuni</span></th>
             </tr>
             </thead>
@@ -83,11 +82,6 @@ use App\Members;
                     <td data-label="Contribuție">
                         <span class="date"><?= e(fmt_date($m['subscription_expires_on'])) ?></span>
                         <span class="badge badge--<?= e($st) ?>"><?= e(expiry_label($m['subscription_expires_on'], $soon)) ?></span>
-                    </td>
-                    <td class="hide-md" data-label="Viză medicală">
-                        <?php if ($m['medical_expires_on']): ?>
-                            <span class="badge badge--<?= e(expiry_status($m['medical_expires_on'], 30)) ?>"><?= e(fmt_date($m['medical_expires_on'])) ?></span>
-                        <?php else: ?>—<?php endif; ?>
                     </td>
                     <td class="col-actions">
                         <?php if ($m['is_active'] && $st !== 'ok'): ?>

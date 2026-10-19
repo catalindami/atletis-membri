@@ -42,6 +42,5 @@ return [
         'admin_email'          => 'adresa-ta@exemplu.ro',
         'weekly_summary_day'   => 1,    // ziua rezumatului: 1 = luni ... 7 = duminică
         'summary_horizon_days' => 14,   // rezumatul arată expirările din următoarele 14 zile
-        'medical_horizon_days' => 30,   // vize medicale care expiră în următoarele 30 de zile
     ],
 ];

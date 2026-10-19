@@ -74,12 +74,10 @@ final class Notifier
         }
 
         $horizon  = (int) config('notifications.summary_horizon_days', 14);
-        $medHoriz = (int) config('notifications.medical_horizon_days', 30);
         $expiring = Members::expiringBetween(0, $horizon);
         $expired  = Members::expired();
-        $medical  = Members::medicalExpiringWithin($medHoriz);
 
-        [$subject, $text, $html] = $this->summaryEmail($expiring, $expired, $medical, $horizon, $medHoriz);
+        [$subject, $text, $html] = $this->summaryEmail($expiring, $expired, $horizon);
         try {
             Mailer::send($to, $subject, $text, $html);
             $this->record('weekly_summary', null, $todayStr, $to, 'sent');
@@ -138,7 +136,7 @@ final class Notifier
         return [$subject, $text, $html];
     }
 
-    private function summaryEmail(array $expiring, array $expired, array $medical, int $horizon, int $medHoriz): array
+    private function summaryEmail(array $expiring, array $expired, int $horizon): array
     {
         $appUrl  = rtrim((string) config('app.url', ''), '/');
         $subject = sprintf(
@@ -149,7 +147,6 @@ final class Notifier
         $sections = [
             ['Contribuții care expiră în următoarele ' . zile($horizon), $expiring, 'subscription_expires_on', $horizon],
             ['Contribuții expirate (membri activi, nereînnoite)', $expired, 'subscription_expires_on', $horizon],
-            ['Vize medicale expirate sau care expiră în ' . zile($medHoriz), $medical, 'medical_expires_on', $medHoriz],
         ];
 
         $text = 'Rezumat săptămânal – ' . today()->format('d.m.Y') . "\n\n";

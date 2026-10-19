@@ -78,8 +78,6 @@ $action = $isNew ? url('member') : url('member', ['id' => $member['id']]);
         <div class="row">
             <label class="<?= $cls('joined_on') ?>"><span>Data înscrierii</span>
                 <input type="date" name="joined_on" value="<?= $v('joined_on') ?>"><?= $err('joined_on') ?></label>
-            <label class="<?= $cls('medical_expires_on') ?>"><span>Viză medicală valabilă până la</span>
-                <input type="date" name="medical_expires_on" value="<?= $v('medical_expires_on') ?>"><?= $err('medical_expires_on') ?></label>
         </div>
         <label class="checkbox">
             <input type="checkbox" name="is_active" value="1" <?= !empty($member['is_active']) ? 'checked' : '' ?>>
